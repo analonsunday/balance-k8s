@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.MENDHAK.name }}
+  labels:
+    service: {{ .Values.MENDHAK.name }}
+spec:
+  ports:
+    - name: echo-http
+      port: {{ .Values.MENDHAK.port }}
+      targetPort: http
+    - name: echo-https
+      port: {{ .Values.MENDHAK.httpsPort }}
+      targetPort: https
+  selector:
+    service: {{ .Values.MENDHAK.name }}

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: {{ .Values.MENDHAK.name }}
+  name: {{ .Values.MENDHAK.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: {{ .Values.MENDHAK.name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: {{ .Values.MENDHAK.name }}
+    spec:
+      containers:
+        - name: {{ .Values.MENDHAK.name }}
+          image: mendhak/http-https-echo:{{ .Values.MENDHAK.tag }}
+          imagePullPolicy: "Always"
+          resources: {}
+          env:
+            - name: HTTP_PORT
+              value: "{{ .Values.MENDHAK.port }}"
+            - name: HTTPS_PORT
+              value: "{{ .Values.MENDHAK.httpsPort }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.MENDHAK.port }}
+              protocol: TCP
+            - name: https
+              containerPort: {{ .Values.MENDHAK.httpsPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+      restartPolicy: Always

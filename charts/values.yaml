@@ -1,0 +1,17 @@
+MENDHAK:
+  name: https-echo
+  tag: latest
+  port: 8080
+  httpsPort: 443
+
+PROM:
+  name: prometheus
+  tag: latest
+  port: 9090
+
+namespace: default
+cpurequest: 0.05
+cpulimit: 2
+ramrequest: 64Mi
+ramlimit: 2Gi
+domain: dev.max

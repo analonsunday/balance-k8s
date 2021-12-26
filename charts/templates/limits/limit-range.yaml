@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: resource-limit-range
+spec:
+  limits:
+    - default:
+        memory: {{ .Values.ramlimit }}
+        cpu: {{ .Values.cpulimit }}
+      defaultRequest:
+        memory: {{ .Values.ramrequest }}
+        cpu: {{ .Values.cpurequest }}
+      type: Container
